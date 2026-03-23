@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "F9xC7xNo8RI=",
+  "success": true,
+  "projectFilePath": "C:\\Users\\youbraj.singh\\Desktop\\SchoolAPI\\SchoolAPI.Project.Domain\\SchoolAPI.Project.Domain.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\youbraj.singh\\.nuget\\packages\\serilog\\3.1.1\\serilog.3.1.1.nupkg.sha512"
+  ],
+  "logs": []
+}
