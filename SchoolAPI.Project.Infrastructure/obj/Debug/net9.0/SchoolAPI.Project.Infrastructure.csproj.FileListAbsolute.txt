@@ -15,3 +15,6 @@ C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Infrastructure\obj\De
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Infrastructure\obj\Debug\net9.0\SchoolAPI.Project.Infrastructure.pdb
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Infrastructure\obj\Debug\net9.0\SchoolAPI.Project.Infrastructure.genruntimeconfig.cache
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Infrastructure\obj\Debug\net9.0\ref\SchoolAPI.Project.Infrastructure.dll
+C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Infrastructure\obj\Debug\net9.0\SchoolAPI.Project.Infrastructure.sourcelink.json
+C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Infrastructure\bin\Debug\net9.0\SchoolAPI.Project.Application.dll
+C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Infrastructure\bin\Debug\net9.0\SchoolAPI.Project.Application.pdb

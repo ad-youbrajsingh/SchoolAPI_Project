@@ -13,3 +13,4 @@ C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Application\obj\Debug
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Application\obj\Debug\net9.0\refint\SchoolAPI.Project.Application.dll
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Application\obj\Debug\net9.0\SchoolAPI.Project.Application.pdb
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Application\obj\Debug\net9.0\ref\SchoolAPI.Project.Application.dll
+C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.Application\obj\Debug\net9.0\SchoolAPI.Project.Application.sourcelink.json

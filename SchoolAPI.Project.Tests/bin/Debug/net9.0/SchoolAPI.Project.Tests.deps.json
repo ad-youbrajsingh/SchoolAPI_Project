@@ -1156,6 +1156,7 @@
         "dependencies": {
           "Microsoft.EntityFrameworkCore": "8.0.1",
           "Microsoft.EntityFrameworkCore.SqlServer": "8.0.1",
+          "SchoolAPI.Project.Application": "1.0.0",
           "SchoolAPI.Project.Domain": "1.0.0"
         },
         "runtime": {
