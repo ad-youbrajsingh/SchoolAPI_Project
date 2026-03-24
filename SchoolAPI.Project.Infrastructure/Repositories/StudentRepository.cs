@@ -12,50 +12,41 @@ public class StudentRepository : IStudentRepository
         _dbContext = context;
     }
 
-    public async Task AddStudentAsync(Student student)
+    public async Task AddStudentAsync(Student student, CancellationToken cancellationToken)
     {
-        await _dbContext.Students.AddAsync(student);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.Students.AddAsync(student, cancellationToken);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<Student?> GetStudentByIdAsync(int id)
+    public async Task<Student?> GetStudentByIdAsync(Guid id, CancellationToken cancellationToken)
     {
-        Student? student = await _dbContext.Students.FindAsync(id);
+        Student? student = await _dbContext.Students.FindAsync([id], cancellationToken);
         return student;
     }
 
-    public async Task<List<Student>> GetAllStudentsAsync()
+    public async Task<List<Student>> GetAllStudentsAsync(CancellationToken cancellationToken)
     {
-        List<Student> students = await _dbContext.Students.ToListAsync();
+        List<Student> students = await _dbContext.Students.ToListAsync(cancellationToken);
         return students;
     }
 
-    public async Task UpdateStudentAsync(Student student)
+    public async Task UpdateStudentAsync(Student student, CancellationToken cancellationToken)
     {
-        Student? existingStudent = await _dbContext.Students.FindAsync(student.Id);
-        if (existingStudent == null)
-        {
-            throw new KeyNotFoundException("No Such Student Found!");
-        }
-
-        existingStudent.FirstName = student.FirstName;
-        existingStudent.LastName = student.LastName;
-        existingStudent.DateOfBirth = student.DateOfBirth;
-        existingStudent.Email = student.Email;
-
-        await _dbContext.SaveChangesAsync();
+        _dbContext.Students.Update(student);
+        await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task DeleteStudentAsync(Student student)
+    public async Task<bool> DeleteStudentAsync(Student student, CancellationToken cancellationToken)
     {
-        Student? existingStudent = await _dbContext.Students.FindAsync(student.Id);
+        Student? existingStudent = await _dbContext.Students.FindAsync([student.Id], cancellationToken);
         if (existingStudent == null)
         {
             throw new KeyNotFoundException("No Such Student Found!");
         }
-
         _dbContext.Students.Remove(existingStudent);
-        await _dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync(cancellationToken);
+        return true;
+
     }
 
 

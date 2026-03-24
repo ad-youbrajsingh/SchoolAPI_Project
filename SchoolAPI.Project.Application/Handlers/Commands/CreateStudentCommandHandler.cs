@@ -5,7 +5,7 @@ using SchoolAPI.Project.Domain.Entities;
 
 namespace SchoolAPI.Project.Application.Handlers.Commands;
 
-class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, Guid>
+public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, Guid>
 {
     private readonly IStudentRepository _studentRepository;
     public CreateStudentCommandHandler(IStudentRepository studentRepository)
@@ -23,7 +23,7 @@ class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand, Guid>
             DateOfBirth = request.CreateStudentDto.DateOfBirth
         };
 
-        await _studentRepository.AddStudentAsync(student);
+        await _studentRepository.AddStudentAsync(student, cancellationToken);
         return student.Id;
     }
 }

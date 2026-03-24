@@ -1,6 +1,6 @@
 namespace SchoolAPI.Project.Application.Dtos.student;
 
-class CreateStudentRequestDTO
+public class CreateStudentRequestDTO
 {
     public string FirstName { get; set; }
     public string LastName { get; set; }

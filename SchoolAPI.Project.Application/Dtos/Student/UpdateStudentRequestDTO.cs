@@ -1,6 +1,6 @@
 namespace SchoolAPI.Project.Application.Dtos.student;
 
-class UpdateStudentRequestDTO
+public class UpdateStudentRequestDTO
 {
     public Guid Id { get; set; }
     public string FirstName { get; set; }

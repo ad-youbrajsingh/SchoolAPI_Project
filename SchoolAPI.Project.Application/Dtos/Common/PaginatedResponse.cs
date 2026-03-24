@@ -1,6 +1,6 @@
 namespace SchoolAPI.Project.Application.Dtos.Common;
 
-class PaginatedResponse<T>
+public class PaginatedResponse<T>
 {
     public IEnumerable<T> Data { get; set; }
     public int PageNumber { get; set; }
@@ -10,7 +10,7 @@ class PaginatedResponse<T>
     public bool HasPreviousPage => PageNumber > 1;
     public bool HasNextPage => PageNumber < TotalPages;
 
-    public PaginatedResponse(IEnumerable<T> data, int pageNumber, int pageSize, int totalCount, int totalPages)
+    public PaginatedResponse(IEnumerable<T> data, int pageNumber, int pageSize, int totalCount)
     {
         Data = data;
         PageNumber = pageNumber;
