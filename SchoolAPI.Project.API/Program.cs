@@ -1,4 +1,6 @@
 using System.Reflection;
+using FluentValidation;
+using FluentValidation.AspNetCore;
 using SchoolAPI.Project.API.Middlewares;
 using SchoolAPI.Project.Application.Interfaces;
 using SchoolAPI.Project.Infrastructure;
@@ -17,6 +19,8 @@ builder.Services.AddMediatR(cff =>
 });
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddAutoMapper(Assembly.Load("SchoolAPI.Project.Application"));
+builder.Services.AddFluentValidationAutoValidation();
+builder.Services.AddValidatorsFromAssembly(Assembly.Load("SchoolAPI.Project.Application"));
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
