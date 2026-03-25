@@ -16,16 +16,16 @@ public class UpdateStudentCommandHandler : IRequestHandler<UpdateStudentCommand,
 
     public async Task<Unit> Handle(UpdateStudentCommand updateStudentCommand, CancellationToken cancellationToken)
     {
-        Student? student = await _studentRepository.GetStudentByIdAsync(updateStudentCommand.StudentRequestDTO.Id, cancellationToken);
+        Student? student = await _studentRepository.GetStudentByIdAsync(updateStudentCommand.Id, cancellationToken);
 
         if (student == null)
         {
             throw new KeyNotFoundException("No Such Student Exist!");
         }
-        student.FirstName = updateStudentCommand.StudentRequestDTO.FirstName;
-        student.LastName = updateStudentCommand.StudentRequestDTO.LastName;
-        student.DateOfBirth = updateStudentCommand.StudentRequestDTO.DateOfBirth;
-        student.Email = updateStudentCommand.StudentRequestDTO.Email;
+        student.FirstName = updateStudentCommand.FirstName;
+        student.LastName = updateStudentCommand.LastName;
+        student.DateOfBirth = updateStudentCommand.DateOfBirth;
+        student.Email = updateStudentCommand.Email;
 
         await _studentRepository.UpdateStudentAsync(student, cancellationToken);
         return Unit.Value;

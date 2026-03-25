@@ -17,10 +17,10 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
     {
         var student = new Student
         {
-            FirstName = request.CreateStudentDto.FirstName,
-            LastName = request.CreateStudentDto.LastName,
-            Email = request.CreateStudentDto.Email,
-            DateOfBirth = request.CreateStudentDto.DateOfBirth
+            FirstName = request.FirstName,
+            LastName = request.LastName,
+            Email = request.Email,
+            DateOfBirth = request.DateOfBirth.ToDateTime(TimeOnly.MinValue)
         };
 
         await _studentRepository.AddStudentAsync(student, cancellationToken);

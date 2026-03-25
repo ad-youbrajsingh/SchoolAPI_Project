@@ -15,7 +15,7 @@ public class DeleteStudentCommandHandler : IRequestHandler<DeleteStudentCommand,
 
     public async Task<bool> Handle(DeleteStudentCommand deleteStudentCommand, CancellationToken cancellationToken)
     {
-        Student? student = await _studentRepository.GetStudentByIdAsync(deleteStudentCommand.DeleteStudentDto.Id, cancellationToken);
+        Student? student = await _studentRepository.GetStudentByIdAsync(deleteStudentCommand.Id, cancellationToken);
 
         if (student == null)
         {
