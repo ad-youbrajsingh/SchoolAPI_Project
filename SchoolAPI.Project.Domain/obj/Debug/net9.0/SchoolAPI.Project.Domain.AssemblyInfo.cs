@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SchoolAPI.Project.Domain")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+205e896765572d995e48eed7de9c22d59deda0ff")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d3afa58f5726050183a74812d17dcb0fbad85cb4")]
 [assembly: System.Reflection.AssemblyProductAttribute("SchoolAPI.Project.Domain")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SchoolAPI.Project.Domain")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -1,6 +1,7 @@
 using System.Reflection;
 using FluentValidation;
 using FluentValidation.AspNetCore;
+using SchoolAPI.Project.API.Converters;
 using SchoolAPI.Project.API.Middlewares;
 using SchoolAPI.Project.Application.Interfaces;
 using SchoolAPI.Project.Infrastructure;
@@ -9,7 +10,14 @@ using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+        {
+            options.JsonSerializerOptions.Converters.Add(
+                new System.Text.Json.Serialization.JsonStringEnumConverter());
+            options.JsonSerializerOptions.Converters.Add(
+                new DateOnlyJsonConverter());
+        });
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
@@ -34,7 +42,7 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
 {
     app.UseSwagger();
     app.UseSwaggerUI();

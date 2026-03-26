@@ -1,12 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "Yvt8V2sq4SE=",
+  "dgSpecHash": "HYEMuPcFOZU=",
   "success": true,
   "projectFilePath": "C:\\Users\\youbraj.singh\\Desktop\\SchoolAPI\\SchoolAPI.Project.Application\\SchoolAPI.Project.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\youbraj.singh\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\youbraj.singh\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
-    "C:\\Users\\youbraj.singh\\.nuget\\packages\\fluentvalidation\\11.9.1\\fluentvalidation.11.9.1.nupkg.sha512",
+    "C:\\Users\\youbraj.singh\\.nuget\\packages\\fluentvalidation\\12.1.1\\fluentvalidation.12.1.1.nupkg.sha512",
     "C:\\Users\\youbraj.singh\\.nuget\\packages\\mediatr\\14.0.0\\mediatr.14.0.0.nupkg.sha512",
     "C:\\Users\\youbraj.singh\\.nuget\\packages\\mediatr.contracts\\2.0.1\\mediatr.contracts.2.0.1.nupkg.sha512",
     "C:\\Users\\youbraj.singh\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

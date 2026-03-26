@@ -21,6 +21,19 @@ public class GlobalExceptionMiddleware
         {
             await _next(context);
         }
+        catch (KeyNotFoundException ex)
+        {
+            _logger.LogWarning(ex, ex.Message);
+
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+
+            await context.Response.WriteAsJsonAsync(new
+            {
+                StatusCode = 404,
+                Message = "Not Found",
+                Detail = ex.Message
+            });
+        }
         catch (Exception ex)
         {
             _logger.LogError(ex, "Unhandled Exception Occurred");
@@ -28,7 +41,7 @@ public class GlobalExceptionMiddleware
             context.Response.ContentType = "application/json";
             var response = new
             {
-                StatusCode = context.Response.StatusCode,
+                context.Response.StatusCode,
                 Message = "Internal Server Error",
                 Detail = ex.Message
             };
