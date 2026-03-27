@@ -38,3 +38,14 @@ jobs:
 
           - name: Push Docker Image
             run: docker push 164990027237.dkr.ecr.ap-south-1.amazonaws.com/schoolapi:latest
+        
+          - name: Deploy to EC2
+            uses: appleboy/ssh-action@v1.0.3
+            with:
+                host: ${{secrets.EC2_HOST}}
+                username: ${{secrets.EC2_USER}}
+                key: ${{secrets.EC2_SSH_KEY}}
+                script: |
+                    docker pull 164990027237.dkr.ecr.ap-south-1.amazonaws.com/schoolapi:latest
+                    docker compose down
+                    docker compose up -d
