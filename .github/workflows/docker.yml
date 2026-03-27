@@ -47,5 +47,5 @@ jobs:
                 key: ${{secrets.EC2_SSH_KEY}}
                 script: |
                     docker pull 164990027237.dkr.ecr.ap-south-1.amazonaws.com/schoolapi:latest
-                    docker compose down
-                    docker compose up -d
+                    docker-compose down
+                    docker-compose up -d
