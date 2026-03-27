@@ -10,7 +10,7 @@ using SchoolAPI.Project.Infrastructure.Repositories;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
-
+//services
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
         {
