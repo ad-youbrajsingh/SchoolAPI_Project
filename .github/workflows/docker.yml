@@ -34,7 +34,7 @@ jobs:
             run: docker compose build
 
           - name: Tag Docker Image
-            run: docker tag schoolapi-schoolapi:latest 164990027237.dkr.ecr.ap-south-1.amazonaws.com/schoolapi:latest
+            run: docker tag schoolapi:latest 164990027237.dkr.ecr.ap-south-1.amazonaws.com/schoolapi:latest
 
           - name: Push Docker Image
             run: docker push 164990027237.dkr.ecr.ap-south-1.amazonaws.com/schoolapi:latest

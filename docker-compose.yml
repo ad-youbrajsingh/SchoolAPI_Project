@@ -1,5 +1,6 @@
 services:
   schoolapi:
+    image: schoolapi
     container_name: schoolapi-container
     build:
       context: .
