@@ -5,6 +5,7 @@ using SchoolAPI.Project.API.Converters;
 using SchoolAPI.Project.API.Middlewares;
 using SchoolAPI.Project.Application.Interfaces;
 using SchoolAPI.Project.Infrastructure;
+using SchoolAPI.Project.Infrastructure.Persistence;
 using SchoolAPI.Project.Infrastructure.Repositories;
 using Serilog;
 
@@ -29,6 +30,7 @@ builder.Services.AddScoped<IStudentRepository, StudentRepository>();
 builder.Services.AddAutoMapper(Assembly.Load("SchoolAPI.Project.Application"));
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("SchoolAPI.Project.Application"));
+builder.Services.AddHealthChecks();
 
 Log.Logger = new LoggerConfiguration()
     .Enrich.FromLogContext()
@@ -42,6 +44,8 @@ builder.Host.UseSerilog();
 
 var app = builder.Build();
 
+app.Services.InitialiseDatabase();
+
 if (app.Environment.IsDevelopment() || app.Environment.EnvironmentName == "Docker")
 {
     app.UseSwagger();
@@ -52,5 +56,6 @@ app.UseSerilogRequestLogging();
 
 app.UseHttpsRedirection();
 app.MapControllers();
+app.MapHealthChecks("/health");
 
 app.Run();

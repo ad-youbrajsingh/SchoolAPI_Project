@@ -1,0 +1,40 @@
+services:
+  schoolapi:
+    container_name: schoolapi-container
+    build:
+      context: .
+      dockerfile: SchoolAPI.Project.API/Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Docker
+    depends_on:
+      sqlserver:
+        condition: service_healthy
+    restart: always
+    healthcheck:
+      test: ["CMD", "curl","-f","http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  sqlserver:
+    container_name: schoolapi-sqlserver-container
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=SchoolAPI@123!
+    ports:
+      - 1433:1433
+    volumes:
+      - sql-data:/var/opt/mssql
+    restart: always
+    healthcheck:
+      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1433'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  sql-data:
+    
