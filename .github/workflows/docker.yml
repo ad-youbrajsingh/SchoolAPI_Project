@@ -47,7 +47,9 @@ jobs:
                 key: ${{secrets.EC2_SSH_KEY}}
                 script: |
                     export AWS_DEFAULT_REGION=ap-south-1
-                    
+
+                    aws sts get-caller-identity
+
                     aws ecr get-login-password --region ap-south-1 \
                     | docker login --username aws --password-stdin 164990027237.dkr.ecr.ap-south-1.amazonaws.com
 
