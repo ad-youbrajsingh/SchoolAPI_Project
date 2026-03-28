@@ -100,7 +100,7 @@ jobs:
 
                 PROJECT_DIR="/home/${{secrets.EC2_USER}}/SchoolAPI_Project"
 
-                if [! -d "$PROJECT_DIR"]; then
+                if [ ! -d "$PROJECT_DIR" ]; then
                   echo "repo not found lets clone..."
                   cd /home/${{secrets.EC2_USER}}
                   git clone https://github.com/ad-youbrajsingh/SchoolAPI_Project.git
@@ -118,7 +118,7 @@ jobs:
 
                 docker pull $REGISTRY_IMAGE
 
-                cat > docker-compose.yml << COMPOSEOF
+                cat > docker-compose.override.yml << COMPOSEOF
                 version: '3.8'
                 services:
                 schoolapi:
