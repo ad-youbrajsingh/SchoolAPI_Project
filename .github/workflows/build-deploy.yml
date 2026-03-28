@@ -121,11 +121,11 @@ jobs:
                 cat > docker-compose.yml << COMPOSEOF
                 version: '3.8'
                 services:
-                schoolapi-api:
+                schoolapi:
                   image: $REGISTRY_IMAGE
                 COMPOSEEOF
 
                 docker-compose up -d
-                
+
 
 
