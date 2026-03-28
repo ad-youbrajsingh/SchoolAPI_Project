@@ -1,0 +1,131 @@
+name: Build and Deploy to EC2
+
+on:
+    push:
+        branches:
+          - main
+    pull_request:
+        branches:
+          - main
+
+env:
+  AWS_REGION: ${{secrets.AWS_REGION}}
+  AWS_ACCOUNT_ID: ${{secrets.AWS_ACCOUNT_ID}}
+  ECR_REPOSITORY: schoolapi
+  IMAGE_TAG: ${{github.sha}}
+
+jobs:
+    build-and-deploy: 
+        runs-on: ubuntu-latest
+        steps:
+          - name: Checkout Code from Repository
+            uses: actions/checkout@v4
+            with:
+              fetch-depth: 0
+        
+          - name: Setup Docker Buildx
+            uses: docker/setup-buildx-action@v3
+
+          - name: Configue AWS Credentials
+            uses: aws-actions/configure-aws-credentials@v4
+            with:
+                aws-access-key-id: ${{secrets.AWS_ACCESS_KEY_ID}}
+                aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
+                aws-region: ${{secrets.AWS_REGION}}
+
+          - name: Login to AWS ECR
+            id: login-ecr
+            uses: aws-actions/amazon-ecr-login@v2
+
+          - name: Build Docker Image using docker-compose
+            run: docker compose build schoolapi
+            env:
+              DOCKER_BUILDKIT: 1
+
+          - name: Tag Docker Image
+            env: 
+              ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
+            run: | 
+              docker tag schoolapi:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
+              docker tag schoolapi:latest $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+              echo "Tagged Images"
+              echo "- $ECR_REGISTRY/$ECR_REPOSITORY:latest"
+              echo "- $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
+
+          - name: Push Docker Image to ECR
+            env: 
+              ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
+            run: |
+              docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
+              docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+              echo "Images Pushed to ECR Successfully!"
+        
+          - name: Deploy to EC2
+            uses: appleboy/ssh-action@v1.0.3
+            env:
+              ECR_REGISTRY: ${{steps.login-ecr.outputs.registry}}
+              REGISTRY_IMAGE: ${{ steps.login-ecr.outputs.registry }}/${{ env.ECR_REPOSITORY }}:latest
+            with:
+              host: ${{secrets.EC2_HOST}}
+              username: ${{secrets.EC2_USER}}
+              key: ${{secrets.EC2_SSH_KEY}}
+              port: 22
+              envs: "ECR_REGISTRY,REGISTRY_IMAGE,AWS_REGION,AWS_ACCOUNT_ID"
+              script: |
+                #!/bin/bash
+
+                set -e
+
+                echo "starting SchoolAPI Deployment"
+
+                export AWS_DEFAULT_REGION=ap-south-1
+                export AWS_ACCESS_KEY_ID=${{secrets.AWS_ACCESS_KEY_ID}}
+                export AWS_SECRET_ACCESS_KEY=${{secrets.AWS_SECRET_ACCESS_KEY}}
+
+                # login to ECR
+                aws ecr get-login-password --region $AWS_DEFAULT_REGION \
+                | docker login --username AWS --password-stdin $ECR_REGISTRY
+
+                echo "Logged in to ECR Successfully!"
+
+                # clean up old Images
+                echo "Cleaning Old Images Started!"
+
+                docker image prune -af || true
+                docker system prune -f || true
+
+                echo "CleanUp Completed!"
+
+                PROJECT_DIR="/home/${{secrets.EC2_USER}}/SchoolAPI_Project"
+
+                if [! -d "$PROJECT_DIR"]; then
+                  echo "repo not found lets clone..."
+                  cd /home/${{secrets.EC2_USER}}
+                  git clone https://github.com/ad-youbrajsingh/SchoolAPI_Project.git
+                  cd SchoolAPI_Project
+                else
+                  cd "$PROJECT_DIR"
+                fi
+                echo "$(pwd)"
+
+                git fetch origin
+                git checkout main
+                git pull origin main
+
+                docker-compose down || true
+
+                docker pull $REGISTRY_IMAGE
+
+                cat > docker-compose.yml << COMPOSEOF
+                version: '3.8'
+                services:
+                schoolapi-api:
+                  image: $REGISTRY_IMAGE
+                COMPOSEEOF
+
+                docker-compose up -d
+                
+
+

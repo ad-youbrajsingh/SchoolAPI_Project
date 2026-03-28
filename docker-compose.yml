@@ -1,40 +1,53 @@
 services:
   schoolapi:
-    image: schoolapi
-    container_name: schoolapi-container
     build:
       context: .
       dockerfile: SchoolAPI.Project.API/Dockerfile
+    image: schoolapi:latest
+    container_name: schoolapi-container
     ports:
-      - 8080:8080
+      - 8080:5000
     environment:
       - ASPNETCORE_ENVIRONMENT=Docker
+      - ASPNETCORE_URLS=http://0.0.0.0:5000
+      - ConnectionStrings__DefaultConnection="Server=sqlserver; database=SchoolAPIProject;TrustServerCertificate=true;user id=sa; password=SchoolAPI@123!"
     depends_on:
       sqlserver:
         condition: service_healthy
     restart: always
     healthcheck:
-      test: ["CMD", "curl","-f","http://localhost:8080/health"]
+      test: ["CMD", "curl", "-f", "http://localhost:5000/swagger/index.html", "||", "exit", "1"]
       interval: 10s
       timeout: 5s
       retries: 5
 
+    networks:
+      - schoolapi-network
+
   sqlserver:
-    container_name: schoolapi-sqlserver-container
     image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: schoolapi-sqlserver-container
     environment:
       - ACCEPT_EULA=Y
       - SA_PASSWORD=SchoolAPI@123!
+      - MSSQL_PID=Developer
     ports:
       - 1433:1433
     volumes:
       - sql-data:/var/opt/mssql
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "bash -c '</dev/tcp/localhost/1433'"]
+      test: ["CMD-SHELL", "/opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 'SchoolAPI@123!' -Q 'SELECT 1' || exit 1"]
       interval: 10s
       timeout: 5s
       retries: 5
+
+    networks:
+      - schoolapi-network
+
+networks:
+  schoolapi-network:
+    driver: bridge
 
 volumes:
   sql-data:

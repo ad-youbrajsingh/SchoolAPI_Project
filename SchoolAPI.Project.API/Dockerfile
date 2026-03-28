@@ -16,6 +16,6 @@ WORKDIR /app
 
 COPY --from=build /app/publish .
 
-EXPOSE 8080
+EXPOSE 5000
 
 ENTRYPOINT [ "dotnet","SchoolAPI.Project.API.dll" ]
