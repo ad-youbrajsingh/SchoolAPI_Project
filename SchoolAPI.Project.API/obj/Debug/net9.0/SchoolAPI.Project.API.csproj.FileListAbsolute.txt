@@ -180,3 +180,6 @@ C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.API\obj\Debug\net9.0\
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.API\obj\Debug\net9.0\SchoolAPI.Project.API.pdb
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.API\obj\Debug\net9.0\SchoolAPI.Project.API.genruntimeconfig.cache
 C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.API\obj\Debug\net9.0\ref\SchoolAPI.Project.API.dll
+C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.API\bin\Debug\net9.0\AWSSDK.Core.dll
+C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.API\bin\Debug\net9.0\AWSSDK.Extensions.NETCore.Setup.dll
+C:\Users\youbraj.singh\Desktop\SchoolAPI\SchoolAPI.Project.API\bin\Debug\net9.0\AWSSDK.SimpleNotificationService.dll

@@ -10,10 +10,12 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
 {
     private readonly IStudentRepository _studentRepository;
     private readonly ILogger<CreateStudentCommandHandler> _logger;
-    public CreateStudentCommandHandler(IStudentRepository studentRepository, ILogger<CreateStudentCommandHandler> logger)
+    private readonly IEventPublisher _eventPublisher;
+    public CreateStudentCommandHandler(IStudentRepository studentRepository, ILogger<CreateStudentCommandHandler> logger,IEventPublisher eventPublisher)
     {
         _studentRepository = studentRepository;
         _logger = logger;
+        _eventPublisher = eventPublisher;
     }
 
     public async Task<Guid> Handle(CreateStudentCommand request, CancellationToken cancellationToken)
@@ -30,6 +32,7 @@ public class CreateStudentCommandHandler : IRequestHandler<CreateStudentCommand,
 
         await _studentRepository.AddStudentAsync(student, cancellationToken);
         _logger.LogInformation("Student created successfully with Id: {StudentId}", student.Id);
+        await _eventPublisher.PublishStudentCreatedEvent(student);
         return student.Id;
     }
 }

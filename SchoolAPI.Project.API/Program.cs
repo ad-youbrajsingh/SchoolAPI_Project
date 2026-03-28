@@ -1,4 +1,5 @@
 using System.Reflection;
+using Amazon.SimpleNotificationService;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using SchoolAPI.Project.API.Converters;
@@ -7,6 +8,7 @@ using SchoolAPI.Project.Application.Interfaces;
 using SchoolAPI.Project.Infrastructure;
 using SchoolAPI.Project.Infrastructure.Persistence;
 using SchoolAPI.Project.Infrastructure.Repositories;
+using SchoolAPI.Project.Infrastructure.Services;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -26,7 +28,10 @@ builder.Services.AddMediatR(cff =>
 {
     cff.RegisterServicesFromAssembly(Assembly.Load("SchoolAPI.Project.Application"));
 });
+builder.Services.AddDefaultAWSOptions(builder.Configuration.GetAWSOptions());
+builder.Services.AddAWSService<IAmazonSimpleNotificationService>();
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<IEventPublisher,SnsEventPublisher>();
 builder.Services.AddAutoMapper(Assembly.Load("SchoolAPI.Project.Application"));
 builder.Services.AddFluentValidationAutoValidation();
 builder.Services.AddValidatorsFromAssembly(Assembly.Load("SchoolAPI.Project.Application"));
