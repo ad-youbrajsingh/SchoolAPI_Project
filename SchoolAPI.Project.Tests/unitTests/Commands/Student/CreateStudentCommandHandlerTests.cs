@@ -33,7 +33,7 @@ public class CreateStudentCommandHandlerTests
             DateOfBirth = new DateOnly(2003, 10, 02)
         };
 
-        Domain.Entities.Student createdStudent = null;
+        Domain.Entities.Student createdStudent = null!;
 
         _mock.Setup(x => x.AddStudentAsync( It.IsAny<Domain.Entities.Student>(), It.IsAny<CancellationToken>()))
                         .Callback<Domain.Entities.Student, CancellationToken>((student, token) =>
